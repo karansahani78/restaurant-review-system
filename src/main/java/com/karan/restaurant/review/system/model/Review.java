@@ -22,7 +22,7 @@ public class Review {
     private Long id;
 
     @Min(value = 1, message = "Rating must be at least 1")
-    @Max(value = 10, message = "Rating cannot be more than 10")
+    @Max(value = 5, message = "Rating must be at most 5")
     private int rating;
 
     private String comment;

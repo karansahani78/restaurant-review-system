@@ -63,21 +63,44 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant updateRestaurant(Long id, Restaurant restaurant) {
-        return null;
+        Restaurant existingRestaurant = restaurantRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Restaurant not found"));
+        existingRestaurant.setName(restaurant.getName());
+        existingRestaurant.setDescription(restaurant.getDescription());
+        existingRestaurant.setEmail(restaurant.getEmail());
+        existingRestaurant.setImageUrl(restaurant.getImageUrl());
+        existingRestaurant.setAddress(restaurant.getAddress());
+        existingRestaurant.setCity(restaurant.getCity());
+        existingRestaurant.setState(restaurant.getState());
+        existingRestaurant.setCountry(restaurant.getCountry());
+        existingRestaurant.setPincode(restaurant.getPincode());
+        existingRestaurant.setContactNumber(restaurant.getContactNumber());
+        existingRestaurant.setUpdatedOn(LocalDateTime.now());
+        existingRestaurant.setOpeningHours(restaurant.getOpeningHours());
+        existingRestaurant.setReviews(restaurant.getReviews());
+        existingRestaurant.setAverageRating(restaurant.getAverageRating());
+        if (restaurant.getCategory() != null) {
+            Category category = categoryRepository.findById(restaurant.getCategory().getId())
+                    .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+            existingRestaurant.setCategory(category);
+        }
+        return restaurantRepository.save(existingRestaurant);
+
     }
 
     @Override
     public Restaurant getRestaurantById(Long id) {
-        return null;
+        return restaurantRepository.findById(id)
+                .orElseThrow(() -> new CategoryNotFoundException("Restaurant not found"));
     }
 
     @Override
     public List<Restaurant> getAllRestaurants() {
-        return List.of();
+        return restaurantRepository.findAll();
     }
 
     @Override
     public void deleteRestaurant(Long id) {
+        restaurantRepository.deleteById(id);
 
     }
 }

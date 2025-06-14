@@ -20,6 +20,8 @@ public class Category {
     private Long id;
 
     private String name; // e.g., Italian, Indian, Chinese
+    private String description; // Description of the category
+    private String imageUrl; // URL to an image representing the category
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "category-restaurant")
