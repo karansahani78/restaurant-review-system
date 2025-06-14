@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RestaurantService {
     // Define methods for restaurant-related operations
-    public Restaurant addRestaurant(Restaurant restaurant);
+    public Restaurant addRestaurant(Restaurant input,Long categoryId);
     public Restaurant updateRestaurant(Long id, Restaurant restaurant);
     public Restaurant getRestaurantById(Long id);
     public List<Restaurant> getAllRestaurants();
