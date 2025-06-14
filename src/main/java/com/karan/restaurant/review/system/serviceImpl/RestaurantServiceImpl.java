@@ -53,7 +53,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurant.setCategory(category);
         restaurant.setAverageRating(0.0); // Always start at 0
 
-        // ✅ Handle reviews (cleanly)
         List<Review> reviews = input.getReviews() != null ? input.getReviews() : new ArrayList<>();
         for (Review review : reviews) {
             review.setRestaurant(restaurant);
