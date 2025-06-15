@@ -170,6 +170,10 @@ http://localhost:8080/swagger-ui/index.html
   "reviews": []
 }
 ```
+Get All Users – API Response
+![Get all user Api response](https://github.com/user-attachments/assets/c12b31ea-53d7-4fe4-85a5-2fc49e823250)
+
+
 
 ### 🏨 Restaurant
 
@@ -182,6 +186,9 @@ http://localhost:8080/swagger-ui/index.html
   "reviews": [...]
 }
 ```
+Get All Restaurants – API Response
+![get all restaurant api response](https://github.com/user-attachments/assets/d3b81e6e-35c8-4fbe-a9ec-8e069ad81218)
+
 
 ### ✍️ Review
 
@@ -194,6 +201,9 @@ http://localhost:8080/swagger-ui/index.html
   "userId": 1
 }
 ```
+Get All Reviews – API Response
+![get all review api response](https://github.com/user-attachments/assets/1fda9526-e6b5-45aa-a618-0c8b1196bac4)
+
 
 ### 📂 Category
 
@@ -205,6 +215,9 @@ http://localhost:8080/swagger-ui/index.html
   "restaurants": []
 }
 ```
+Get All Categories – API Response
+![get all category api response](https://github.com/user-attachments/assets/fefee907-8816-466d-b0c0-897107ff467f)
+
 
 ---
 
