@@ -3,6 +3,7 @@ package com.karan.restaurant.review.system.controller;
 import com.karan.restaurant.review.system.dto.UserRequestDTO;
 import com.karan.restaurant.review.system.dto.UserResponseDTO;
 import com.karan.restaurant.review.system.model.User;
+import com.karan.restaurant.review.system.repository.UserRepository;
 import com.karan.restaurant.review.system.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @PostMapping("/admin/register")
     public ResponseEntity<UserResponseDTO> registerUser( @RequestBody UserRequestDTO userRequestDTO){
