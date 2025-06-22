@@ -11,9 +11,11 @@
 | Language   | `Java 17`                                     |
 | Framework  | `Spring Boot`, `Spring Data JPA`, `Hibernate` |
 | Database   | `PostgreSQL` / `MySQL`                        |
+| Caching    | `Redis`                                       |
 | Build Tool | `Maven`                                       |
 | API Docs   | `Swagger UI`, `Springdoc OpenAPI`             |
 | Utility    | `Lombok`, `MapStruct`                         |
+```
 
 ---
 
