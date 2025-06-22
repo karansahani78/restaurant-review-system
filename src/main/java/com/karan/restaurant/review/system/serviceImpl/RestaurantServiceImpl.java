@@ -9,6 +9,9 @@ import com.karan.restaurant.review.system.repository.UserRepository;
 import com.karan.restaurant.review.system.service.CategoryService;
 import com.karan.restaurant.review.system.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,6 +26,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final ReviewRepository reviewRepository;
 
     @Override
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant addRestaurant(Restaurant input, Long categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
         Restaurant restaurant = new Restaurant();
@@ -62,6 +66,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @CachePut(value = "restaurants", key = "#id")
     public Restaurant updateRestaurant(Long id, Restaurant restaurant) {
         Restaurant existingRestaurant = restaurantRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Restaurant not found"));
         existingRestaurant.setName(restaurant.getName());
@@ -88,17 +93,20 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @Cacheable(value = "restaurants", key = "#id")
     public Restaurant getRestaurantById(Long id) {
         return restaurantRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("Restaurant not found"));
     }
 
     @Override
+    @Cacheable(value = "restaurantsList")
     public List<Restaurant> getAllRestaurants() {
         return restaurantRepository.findAll();
     }
 
     @Override
+    @CacheEvict(value = "restaurants", key = "#id")
     public void deleteRestaurant(Long id) {
         restaurantRepository.deleteById(id);
 

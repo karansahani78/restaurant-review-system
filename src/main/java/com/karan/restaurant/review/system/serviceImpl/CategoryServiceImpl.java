@@ -7,6 +7,9 @@ import com.karan.restaurant.review.system.repository.CategoryRepository;
 import com.karan.restaurant.review.system.repository.RestaurantRepository;
 import com.karan.restaurant.review.system.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final RestaurantRepository restaurantRepository;
 
     @Override
+    @CacheEvict(value = "categories", allEntries = true)
     public Category addCategory(Category category) {
         // Fetch only actual restaurant entities from DB using the IDs provided
         List<Restaurant> restaurantList = category.getRestaurants().stream()
@@ -38,6 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
+    @CachePut(value = "categories", key = "#id")
     public Category updateCategory(Long id, Category category) {
         Category existingCategory = categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
         existingCategory.setName(category.getName());
@@ -47,6 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @CacheEvict(value = "categories", key = "#id")
     public void deleteCategory(Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
@@ -62,17 +68,20 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.delete(category);
     }
     @Override
+    @Cacheable(value = "categories", key = "#id")
     public Category getCategoryById(Long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
 
     }
 
     @Override
+    @Cacheable(value = "categoriesList")
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
     @Override
+    @Cacheable(value = "categoriesByName", key = "#name", unless = "#result == null")
     public Optional<Category> findByName(String name) {
         return categoryRepository.findByName(name);
     }

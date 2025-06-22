@@ -7,6 +7,9 @@ import com.karan.restaurant.review.system.model.User;
 import com.karan.restaurant.review.system.repository.UserRepository;
 import com.karan.restaurant.review.system.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     @Override
+    @CacheEvict(value = "users", allEntries = true)
     public UserResponseDTO createUser(UserRequestDTO userRequestDT0) {
         User user = User.builder()
                 .name(userRequestDT0.getName())
@@ -36,6 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(value = "users", key = "#id")
     public UserResponseDTO getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
         return UserResponseDTO.builder()
@@ -48,6 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(value = "usersList ")
     public List<UserResponseDTO> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(user -> UserResponseDTO.builder()
@@ -60,6 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @CachePut(value = "users", key = "#id")
     public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDT0) {
         User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
         existingUser.setName(userRequestDT0.getName());
@@ -79,6 +86,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @CacheEvict(value = "users", key = "#id")
     public void deleteUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
         userRepository.delete(user);

@@ -12,6 +12,9 @@ import com.karan.restaurant.review.system.repository.ReviewRepository;
 import com.karan.restaurant.review.system.repository.UserRepository;
 import com.karan.restaurant.review.system.service.ReviewService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,13 +28,14 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
+    @CacheEvict(value = "reviews", allEntries = true)
     public Review addReview(Review review, String restaurantId, String userId) {
         User user = userRepository.findById(Long.parseLong(userId))
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
         Restaurant restaurant = restaurantRepository.findById(Long.parseLong(restaurantId))
                 .orElseThrow(() -> new RestaurantNotFoundException("Restaurant not found with id: " + restaurantId));
 
-        // ✅ Validate rating manually
+        // Validate rating manually
         Integer rating = review.getRating();
         if (rating == null || rating < 1 || rating > 5) {
             throw new IllegalArgumentException("Rating must be between 1 and 5.");
@@ -47,6 +51,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @CachePut(value = "reviews", key = "#id")
     public Review updateReview(Long id, Review review) {
         return reviewRepository.findById(id)
                 .map(existingReview -> {
@@ -58,6 +63,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @CacheEvict(value = "reviews", key = "#id")
     public void deleteReview(Long id) {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review not found with id: " + id));
@@ -65,12 +71,14 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Cacheable(value = "reviews", key = "#id")
     public Review getReviewById(Long id) {
         return reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review not found with id: " + id));
     }
 
     @Override
+    @Cacheable(value = "reviewsList")
     public List<Review> getAllReviews() {
         return reviewRepository.findAll();
     }
