@@ -1,12 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Restaurant, Users, Star, Grid3X3 } from 'lucide-react';
+import { Utensils, Users, Star, Grid3X3 } from 'lucide-react';
 
 const Header = () => {
   const location = useLocation();
 
   const navItems = [
-    { path: '/', label: 'Home', icon: Restaurant },
-    { path: '/restaurants', label: 'Restaurants', icon: Restaurant },
+    { path: '/', label: 'Home', icon: Utensils },
+    { path: '/restaurants', label: 'Restaurants', icon: Utensils },
     { path: '/categories', label: 'Categories', icon: Grid3X3 },
     { path: '/reviews', label: 'Reviews', icon: Star },
     { path: '/users', label: 'Users', icon: Users },
@@ -17,7 +17,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2">
-            <Restaurant className="h-8 w-8 text-primary-600" />
+            <Utensils className="h-8 w-8 text-primary-600" />
             <span className="text-xl font-bold text-gray-900">FoodieReview</span>
           </Link>
           

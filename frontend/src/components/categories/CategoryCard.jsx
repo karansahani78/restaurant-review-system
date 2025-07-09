@@ -1,4 +1,4 @@
-import { Restaurant, Edit, Trash2 } from 'lucide-react';
+import { Utensils, Edit, Trash2 } from 'lucide-react';
 
 const CategoryCard = ({ category, onEdit, onDelete }) => {
   const { id, name, description, restaurants = [], imageUrl } = category;
@@ -17,7 +17,7 @@ const CategoryCard = ({ category, onEdit, onDelete }) => {
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-400">
-              <Restaurant className="h-8 w-8" />
+              <Utensils className="h-8 w-8" />
             </div>
           )}
         </div>
@@ -57,7 +57,7 @@ const CategoryCard = ({ category, onEdit, onDelete }) => {
           {/* Restaurant Count */}
           <div className="mt-auto">
             <div className="flex items-center text-gray-600 text-sm">
-              <Restaurant className="h-4 w-4 mr-1" />
+              <Utensils className="h-4 w-4 mr-1" />
               <span>{restaurantCount} restaurant{restaurantCount !== 1 ? 's' : ''}</span>
             </div>
           </div>

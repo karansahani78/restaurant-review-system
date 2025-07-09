@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Restaurant, Users, Star, Grid3X3, TrendingUp, Award } from 'lucide-react';
+import { Utensils, Users, Star, Grid3X3, TrendingUp, Award } from 'lucide-react';
 import { restaurantService } from '../services/restaurantService';
 import { userService } from '../services/userService';
 import { reviewService } from '../services/reviewService';
@@ -62,7 +62,7 @@ const Home = () => {
     {
       title: 'Restaurants',
       value: stats.restaurants,
-      icon: Restaurant,
+      icon: Utensils,
       color: 'text-primary-600',
       bgColor: 'bg-primary-50',
       link: '/restaurants',
@@ -183,7 +183,7 @@ const Home = () => {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-gray-400">
-                        <Restaurant className="h-12 w-12" />
+                        <Utensils className="h-12 w-12" />
                       </div>
                     )}
                   </div>
